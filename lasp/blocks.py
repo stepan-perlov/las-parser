@@ -178,7 +178,6 @@ class OtherBlock(InformationBlock):
     pass
 
 class DataBlock(BlockBase):
-    _set = []
 
     @property
     def set(self):
@@ -195,6 +194,10 @@ class DataBlock(BlockBase):
                 self.header = re.findall(r"[^\s]+", value[3:].strip())
             else:
                 raise DataBlockException("Supported header start with '~A '")
+
+    def __init__(self):
+        BlockBase.__init__(self)
+        self._set = []
 
     def parse(self, line):
         record = re.findall("\d+\.{0,1}(?=\d+)\d*", line.strip())
