@@ -202,4 +202,4 @@ class DataBlock(BlockBase):
     def parse(self, line):
         record = re.findall("\d+\.{0,1}(?=\d+)\d*", line.strip())
         if record:
-            self._set.append( record )
+            self._set.append([float(row) for row in record])
