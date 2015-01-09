@@ -3,14 +3,12 @@ Las Parser
 
 Split .las file to sections with parsed data.
 
-
 **Install:**
 ```bash
 stepan@stepan-pc:~/Programms$ git clone https://github.com/stepan-perlov/las-parser
 stepan@stepan-pc:~/Programms$ cd las-parser
 stepan@stepan-pc:~/Programms/las-parser$ pip install .
 ```
-
 
 **Usage:**
 ```bash
@@ -117,7 +115,6 @@ None
 ```
 235
 ```
-
 
 **Analyze data with [pandas](http://pandas.pydata.org/):**
 ```python

@@ -100,7 +100,7 @@ class InformationBlock(BlockBase):
                 ")",
                 "\s*\.\s*",
                 "(?P<{}>".format(self.header["unit"]),
-                    "[\w\/\.\\\\]+|\s{{0}}",
+                    "[\w\/\.\\\\%]+|\s{{0}}",
                 ")",
                 "\s{{3,}}",
                 "{data_group}",
