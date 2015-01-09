@@ -7,14 +7,15 @@ from errors import LasFormatException
 
 
 class LasParser(object):
-    _V = VersionBlock()
-    _W = WellBlock()
-    _C = CurveBlock()
-    _P = ParameterBlock()
-    _A = DataBlock()
-    _comments = []
 
     def __init__(self, fname):
+        self._V = VersionBlock()
+        self._W = WellBlock()
+        self._C = CurveBlock()
+        self._P = ParameterBlock()
+        self._A = DataBlock()
+        self._comments = []
+
         block = None
         with open(fname) as fstream:
             for line in fstream:

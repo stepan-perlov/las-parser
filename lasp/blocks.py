@@ -100,7 +100,7 @@ class InformationBlock(BlockBase):
                 ")",
                 "\s*\.\s*",
                 "(?P<{}>".format(self.header["unit"]),
-                    "[\w\/\.\\\\]+|\s{{0}}",
+                    "[\w\/\.\\\\%]+|\s{{0}}",
                 ")",
                 "\s{{3,}}",
                 "{data_group}",
@@ -178,7 +178,6 @@ class OtherBlock(InformationBlock):
     pass
 
 class DataBlock(BlockBase):
-    _set = []
 
     @property
     def set(self):
@@ -192,11 +191,15 @@ class DataBlock(BlockBase):
     def title(self, value):
         if not self._header:
             if value[:2] == "A ":
-                self.header = re.findall(r"[^\s]+", value[3:].strip())
+                self.header = re.findall(r"[^\s]+", value[2:].strip())
             else:
                 raise DataBlockException("Supported header start with '~A '")
+
+    def __init__(self):
+        BlockBase.__init__(self)
+        self._set = []
 
     def parse(self, line):
         record = re.findall("\d+\.{0,1}(?=\d+)\d*", line.strip())
         if record:
-            self._set.append( record )
+            self._set.append([float(row) for row in record])
