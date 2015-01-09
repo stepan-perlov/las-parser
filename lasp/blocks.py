@@ -191,7 +191,7 @@ class DataBlock(BlockBase):
     def title(self, value):
         if not self._header:
             if value[:2] == "A ":
-                self.header = re.findall(r"[^\s]+", value[3:].strip())
+                self.header = re.findall(r"[^\s]+", value[2:].strip())
             else:
                 raise DataBlockException("Supported header start with '~A '")
 
