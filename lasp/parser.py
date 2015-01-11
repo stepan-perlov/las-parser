@@ -1,3 +1,4 @@
+import traceback
 from blocks import VersionBlock
 from blocks import WellBlock
 from blocks import CurveBlock
@@ -9,6 +10,7 @@ from errors import LasFormatException
 class LasParser(object):
 
     def __init__(self, fname):
+        self.errors = []
         self._V = VersionBlock()
         self._W = WellBlock()
         self._C = CurveBlock()
@@ -19,15 +21,20 @@ class LasParser(object):
         block = None
         with open(fname) as fstream:
             for line in fstream:
-                if line[0] == "~":
-                    block = self.__getattribute__("_{}".format(line[1]))
-                    block.title = line[1:]
-                elif block:
-                    block.parse(line)
-                elif line[0] == "#":
-                    self.comments.append(line[1:].strip())
-                else:
-                    raise LasFormatException("Block not specified")
+                try:
+                    if line[0] == "~":
+                        block = self.__getattribute__("_{}".format(line[1]))
+                        block.title = line[1:]
+                    elif block:
+                        block.parse(line)
+                    elif line[0] == "#":
+                        self.comments.append(line[1:].strip())
+                    else:
+                        raise LasFormatException("Block not specified")
+                except LasFormatException as e:
+                    raise e
+                except Exception:
+                    self.errors.append(traceback.format_exc())
 
     @property
     def comments(self):
