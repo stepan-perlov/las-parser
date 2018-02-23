@@ -30,6 +30,7 @@ class InformationBlock(BlockBase):
         self._linenum = 0
         self._regexp = None
         self._data = {}
+        self._data_lines = []
         self._comments = []
         self._data_subh = []
 
@@ -49,6 +50,10 @@ class InformationBlock(BlockBase):
     @property
     def data(self):
         return self._data
+
+    @property
+    def data_lines(self):
+        return self._data_lines
 
     def get(self, key):
         return self._data.get(key.upper(), None)
@@ -129,6 +134,7 @@ class InformationBlock(BlockBase):
         elif line[0] == "#":
             self._comments.append(line[1:].strip())
         else:
+            self._data_lines.append(line.strip())
             result = self.regexp.match(line.strip()).groupdict()
             if result[self.header["name"]]:
                 key = result[self.header["name"]].upper()
